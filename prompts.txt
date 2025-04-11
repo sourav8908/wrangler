@@ -1,0 +1,65 @@
+/*
+ * Copyright © 2025 Cask Data, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+# AI Tool Used:
+ChatGPT (OpenAI)
+
+# Purpose:
+Used ChatGPT extensively to implement, debug, and complete the assignment for enhancing CDAP Wrangler with support for ByteSize and TimeDuration units.
+
+# Summary of Work Guided by ChatGPT:
+- Forking and setting up the project
+- Installing and configuring Maven, JDK, and environment variables
+- Editing and compiling ANTLR grammar (Directives.g4)
+- Adding BYTE_SIZE and TIME_DURATION lexer tokens
+- Creating custom argument types: ByteSize.java and TimeDuration.java
+- Updating token definitions in TokenType
+- Modifying parser visitor logic to handle new token types
+- Implementing the new directive: AggregateStats.java
+- Writing the usage definition with correct TokenType references
+- Parsing and accumulating byte and time values using helper utilities
+- Finalizing aggregates and returning computed rows
+- Creating and running unit tests in AggregateStatsTest.java
+- Parsing recipe strings with TestingRig
+- Verifying test output using JUnit assertions
+- Fixing Checkstyle violations (file endings, import order)
+- Addressing RAT (license header) violations
+- Ensuring full project passes `mvn clean install` successfully
+
+# Example Prompts Used in ChatGPT:
+- “how to write ANTLR lexer rule for 10MB, 5ms, 2.5GB”
+- “how to add custom token BYTE_SIZE to Wrangler grammar”
+- “how to create Java class ByteSize to convert '5MB' into bytes”
+- “how to implement a Directive in CDAP Wrangler”
+- “what is TokenType and how do I define new usage types”
+- “how to fix Maven error: Too many files with unapproved license”
+- “checkstyle error: file must end with newline — how to fix”
+- “JUnit test for aggregate directive with byte and time inputs”
+- “how to run mvn checkstyle:check and mvn test selectively”
+- “mvn command to verify full project build and test pass”
+
+# Notes:
+ChatGPT guided me step-by-step through:
+- Code writing
+- Maven build troubleshooting
+- ANTLR regeneration
+- Checkstyle & license compliance
+- Writing proper JavaDoc headers
+- Testing logic and validation
+
+# Outcome:
+The final project builds successfully (`mvn clean install` passed), all tests pass, and Checkstyle & RAT checks are clean. The assignment has been fully completed with AI support.
+

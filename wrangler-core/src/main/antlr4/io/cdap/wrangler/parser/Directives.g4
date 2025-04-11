@@ -163,6 +163,14 @@ number
  : Number
  ;
 
+byteSizeArg
+ : BYTE_SIZE
+ ;
+
+timeDurationArg
+ : TIME_DURATION
+ ;
+
 bool
  : Bool
  ;
@@ -310,4 +318,12 @@ fragment Int
 
 fragment Digit
  : [0-9]
+ ;
+
+BYTE_SIZE
+ : [0-9]+ ('.' [0-9]+)? [KkMmGg][Bb]    // Example: 10KB, 1.5MB, 2GB
+ ;
+
+TIME_DURATION
+ : [0-9]+ ('.' [0-9]+)? ('ms' | 's' | 'm' | 'h' | 'd')     // Example: 200ms, 1.5s, 2h
  ;

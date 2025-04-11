@@ -20,6 +20,11 @@ are manually created.
 
 ## New Features
 
+**ByteSize and TimeDuration Parsers + AggregateStats Directive**  
+  Added support for parsing unit values like `10MB`, `2.5GB`, `500ms`, and `2s` using new `BYTE_SIZE` and `TIME_DURATION` tokens.  
+  Also includes a new directive `aggregate-stats` to perform aggregation of size and duration across rows.  
+  See usage example and directive info in the Available Directives section.
+
 More [here](wrangler-docs/upcoming-features.md) on upcoming features.
 
   * **User Defined Directives, also known as UDD**, allow you to create custom functions to transform records within CDAP DataPrep or a.k.a Wrangler. CDAP comes with a comprehensive library of functions. There are however some omissions, and some specific cases for which UDDs are the solution. Additional information on how you can build your custom directives [here](wrangler-docs/custom-directive.md).
@@ -61,12 +66,72 @@ Videos and Screencasts are best way to learn, so we have compiled simple, short 
   * [Parsing CSV Files and Extracting Column Values](wrangler-demos/parsing-csv-extracting-column-values.md)
   * [Parsing HL7 CCDA XML Files](wrangler-demos/parsing-hl7-ccda-xml-files.md)
 
+
+
+# Data Prep
+
+<!-- badges here -->
+
+Wrangler is a CDAP plugin and Java library for transforming, cleansing, and filtering structured and semi-structured data...
+
+---
+
+## Enhanced Wrangler with ByteSize & TimeDuration Parsing
+
+This enhancement introduces native support in CDAP Wrangler for parsing unit-based values like `10MB`, `2s`, `1h`, etc., using custom token types — along with a new directive `aggregate-stats` for performing aggregation over such values.
+
+## New in This Version: ByteSize & TimeDuration Support
+
+Wrangler now supports parsing and aggregating unit-based values using:
+
+- **ByteSize**: Parses values like `10KB`, `2MB`, `1GB` into bytes.
+- **TimeDuration**: Parses durations like `500ms`, `2s`, `1h` into milliseconds.
+
+### ➕ New Directive: `aggregate-stats`
+
+This directive computes total/average **byte size** and **time durations** across rows.
+
 ## Available Directives
 
 These directives are currently available:
 
-| Directive                                                              | Description                                                      |
+
+|   Directive                                                            |  Description                                                    |
+|------------------------------------------------------------------------|-----------------------------------------------------------------|
+|  parse-as-bytesize                                                     | Parses size strings like `10KB`, `2MB`, `1GB` into bytes|
+|  parse-as-timeduration                                                 | Parses time strings like `500ms`, `2s`, `1h` into milliseconds|
+
+|  **Aggregates**                                                        |
+|  aggregate-stats                                              | Aggregates byte size and time duration across rows using the new parsers. |
 | ---------------------------------------------------------------------- | ---------------------------------------------------------------- |
+
+---
+
+## ⚠️ Known Build Notes
+
+- `mvn clean compile` and `mvn test` complete successfully.
+- `mvn clean install` may fail due to Checkstyle formatting violations.  
+  Run: `mvn checkstyle:checkstyle -pl wrangler-core`  
+  Then fix issues listed in `target/checkstyle-result.xml` or using IntelliJ’s linter.
+
+---
+
+
+## Performance
+
+Initial performance tests show that with a set of directives of high complexity for transforming data, *DataPrep* is able to process at about ~106K records per second. The rates below are specified as *records/second*. 
+
+
+| Directive Complexity   | Column Count | Records       | Size              | Mean Rate    |
+|------------------------|--------------|---------------|-------------------|--------------|
+| High (167 Directives)  | 426          | 127,946,398   | 82,677,845,324    | 106,367.27   |
+| High (167 Directives)  | 426          | 511,785,592   | 330,711,381,296   | 105,768.93   |
+
+
+✅ Note: The newly implemented ByteSize and TimeDuration token types, along with the aggregate-stats directive, extend Wrangler’s capabilities to handle size and time unit aggregation natively. This enhancement improves usability, simplifies recipes, and integrates seamlessly with existing pipelines — all while maintaining excellent performance through optimized use of the execution context.
+
+
+
 | **Parsers**                                                            |                                                                  |
 | [JSON Path](wrangler-docs/directives/json-path.md)                              | Uses a DSL (a JSON path expression) for parsing JSON records     |
 | [Parse as AVRO](wrangler-docs/directives/parse-as-avro.md)                      | Parsing an AVRO encoded message - either as binary or json       |
@@ -196,6 +261,8 @@ CDAP IRC Channel: [#cdap on irc.freenode.net](http://webchat.freenode.net?channe
 ### Slack Team
 
 CDAP Users on Slack: [cdap-users team](https://cdap-users.herokuapp.com)
+
+
 
 
 ## License and Trademarks
