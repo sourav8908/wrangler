@@ -110,7 +110,7 @@ These directives are currently available:
 ## ⚠️ Known Build Notes
 
 - `mvn clean compile` and `mvn test` complete successfully.
-- `mvn clean install` may fail due to Checkstyle formatting violations.  
+- `mvn clean install` may fail due to Checkstyle violations (formatting only, not functional issues).  
   Run: `mvn checkstyle:checkstyle -pl wrangler-core`  
   Then fix issues listed in `target/checkstyle-result.xml` or using IntelliJ’s linter.
 
